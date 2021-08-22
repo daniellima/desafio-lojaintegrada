@@ -1,11 +1,14 @@
 from aiohttp import web
 from aiohttp_swagger import setup_swagger
+from src.app.shopping_cart.shopping_cart_controller import ShoppingCartController
 
 def setup_app(app):
 
     app.add_routes([
         web.get('/', hello),
-        web.get('/ping', ping)
+        web.get('/ping', ping),
+        web.get('/v1/shopping_cart', ShoppingCartController.get),
+        web.post('/v1/shopping_cart/items', ShoppingCartController.post_item)
     ])
 
     setup_swagger(app)
@@ -22,7 +25,7 @@ async def hello(request):
         "200":
             description: Uma arte ASCII
     '''
-    return web.Response(text="""
+    return web.Response(text=r"""
      $$$$$$\  $$\                                     $$\                            $$$$$$\                        $$\            $$$$$$\  $$$$$$$\  $$$$$$\ 
     $$  __$$\ $$ |                                    \__|                          $$  __$$\                       $$ |          $$  __$$\ $$  __$$\ \_$$  _|
     $$ /  \__|$$$$$$$\   $$$$$$\   $$$$$$\   $$$$$$\  $$\ $$$$$$$\   $$$$$$\        $$ /  \__| $$$$$$\   $$$$$$\  $$$$$$\         $$ /  $$ |$$ |  $$ |  $$ |  

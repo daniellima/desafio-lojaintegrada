@@ -46,6 +46,9 @@ Não funcionais:
 - [ ] Usar wiremock para simular API de produtos e cupons
 - [ ] Persistir carrinho em um banco de dados
 - [ ] Testes de stress com k6
+- [ ] Autenticação
+- [ ] Global error handling
+- [ ] Validation
 
 ## Contribuindo
 
