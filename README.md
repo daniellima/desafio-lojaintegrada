@@ -19,7 +19,16 @@ curl localhost:8080
 
 ## Roadmap
 
-...
+- [ ] Adicionar um item no carrinho
+- [ ] Remover um item do carrinho
+- [ ] Atualizar a quantidade de um item no carrinho
+- [ ] Limpar o carrinho
+- [ ] Adicionar um cupom de desconto ao carrinho
+- [ ] Gerar totais e subtotais
+- [ ] Persistir o carrinho
+- [ ] Recuperar o carrinho
+- [ ] Retornar um JSON com o carrinho completo (para ser usado no frontend)
+- [ ] Usar wiremock para simular API de produtos
 
 ## Contribuindo
 
@@ -35,6 +44,8 @@ Em termos de stack:
 - aiohttp como framework web
 
 ### Rodando testes
+
+Os testes são majoritariamente de API. Isso é devido à baixa complexidade de regras de negócios da API interna, que permite testar ela bem só a nível de API, sem o perigo de o tempo de execução ficar extremamente alto.
 
 ```bash
 # A primeira coisa a fazer é rodar os testes e ver se está tudo certo:
