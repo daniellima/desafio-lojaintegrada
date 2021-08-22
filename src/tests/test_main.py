@@ -16,12 +16,6 @@ async def test_hello(client):
     resp = await client.get('/')
     assert resp.status == 200
 
-    expected_response = json.dumps({
-        'hello': 'world!'
-    })
-
-    assert (await resp.text()) == expected_response
-
 async def test_ping(client):
 
     resp = await client.get('/ping')
