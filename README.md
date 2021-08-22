@@ -19,16 +19,33 @@ curl localhost:8080
 
 ## Roadmap
 
-- [ ] Adicionar um item no carrinho
-- [ ] Remover um item do carrinho
-- [ ] Atualizar a quantidade de um item no carrinho
-- [ ] Limpar o carrinho
-- [ ] Adicionar um cupom de desconto ao carrinho
-- [ ] Gerar totais e subtotais
-- [ ] Persistir o carrinho
+Funcionais:
+- [ ] Criar carrinho para usuário
+    - o carrinho começa vazio.
 - [ ] Recuperar o carrinho
-- [ ] Retornar um JSON com o carrinho completo (para ser usado no frontend)
-- [ ] Usar wiremock para simular API de produtos
+    - retornar todas as infos do carrinho (cupom + produtos)
+- [ ] Adicionar um item no carrinho
+    - usando ID do produto
+    - Erro se estoque 0 ou produto não existe
+- [ ] Remover um item do carrinho
+    - pelo ID do produto
+- [ ] Atualizar a quantidade de um item no carrinho
+    - ID do produto + quantidade
+    - Retornar erro com estoque atual do item, se não tem item suficiente
+- [ ] Adicionar um cupom de desconto ao carrinho
+    - pelo ID do cupom
+    - cupom fixo. Preço não pode ser menor que zero 
+- [ ] Limpar o carrinho 
+    - remover itens e cupons de desconto
+- [ ] Gerar totais e subtotais
+    - subtotal é soma dos preços dos produtos
+    - total considera cupom de desconto
+
+
+Não funcionais:
+- [ ] Usar wiremock para simular API de produtos e cupons
+- [ ] Persistir carrinho em um banco de dados
+- [ ] Testes de stress com k6
 
 ## Contribuindo
 
