@@ -37,6 +37,17 @@ async def hello(request):
     """)
 
 async def ping(request):
+    '''
+    ---
+    description: Retorna um texto fixo e sempre 200. Serve para verificar que a API está funcionando. Útil para monitoramento
+    tags:
+    - misc
+    produces:
+    - text/plain
+    responses:
+        "200":
+            description: A string 'pong'.
+    '''
     return web.Response(text='pong')
 
 if __name__ == '__main__':
