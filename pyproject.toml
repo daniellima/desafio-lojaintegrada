@@ -9,6 +9,7 @@ python = "^3.9"
 aiohttp = "^3"
 chardet = "^4"
 aiodns = "^3"
+aiohttp-swagger = "^1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6"
