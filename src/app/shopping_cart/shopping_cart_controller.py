@@ -97,12 +97,81 @@ class ShoppingCartController:
         })
 
     async def post_item(request):
+        '''
+        ---
+        description: Retorna o carrinho atual do usuário
+        tags:
+        - shopping_cart
+        produces:
+        - application/json
+        parameters:
+        - in: body
+          name: body
+          description: O id do item a ser adicionado e sua quantidade
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                description: O id do item a ser adicionado
+                example: 4
+              quantity:
+                type: int
+                description: A quantidade de itens a serem adicionados
+                example: 2
+            required:
+              - id
+              - quantity
+        responses:
+            "201":
+                description: Item adicionado no carrinho
+                schema:
+                    type: object
+                    properties:
+                        id:
+                            type: string
+                            description: O id do item
+                            example: 3
+                        name:
+                            type: string
+                            description: O nome que identifica o produto para o usuário
+                            example: Playstation 5
+                        price:
+                            type: int
+                            description: O preço do produto no momento da adição dele no carrinho
+                            example: 5000
+                    required:
+                        - id
+                        - name
+                        - price
+            "400":
+                description: O item não pode ser adicionado no carrinho. Mais detalhes no erro específico lançado
+                schema:
+                    type: object
+                    properties:
+                        error:
+                            type: object
+                            properties:
+                                type:
+                                    type: string
+                                    description: o tipo do erro
+                                    example: no_stock
+                                message:
+                                    type: string
+                                    description: uma descrição legível por humanos para o erro
+                                    example: Not enough items in stock
+                            required:
+                            - type
+                            - message
+                    required:
+                    - error
+        '''
 
         # TODO: validation HTTP 
 
         data = await request.json()
 
-        # TODO: validation negócios (o item já não estã no carrinho. Tem estoque, etc....)
+        # TODO: validation negócios (o item já não está no carrinho. Tem estoque, etc....)
 
         new_item = await ItemRepository().get_by_id(data['id'])
 
@@ -111,5 +180,5 @@ class ShoppingCartController:
         return web.json_response({
             'id': new_item.id,
             'name': new_item.name,
-            'price': new_item.price
+            'price': new_item.price,
         }, status=201)
