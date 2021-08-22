@@ -26,7 +26,7 @@ class ShoppingCartController:
                                 properties:
                                     id:
                                         type: string
-                                        description: O id do cupom
+                                        description: O id do item
                                         example: 3
                                     name:
                                         type: string
