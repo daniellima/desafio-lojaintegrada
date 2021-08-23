@@ -1,8 +1,33 @@
 from aiohttp import web
 from aiohttp_swagger import setup_swagger
+from src.app.shopping_cart.out_of_stock_exception import OutOfStockException
+from src.app.item.item_not_found_exception import ItemNotFoundException
 from src.app.shopping_cart.shopping_cart_controller import ShoppingCartController
 
-def setup_app(app):
+@web.middleware
+async def error_middleware(request, handler):
+    try:
+        return await handler(request)
+    except ItemNotFoundException as ex:
+        return web.json_response({
+            'error': {
+                'type': 'item_not_found',
+                'message': str(ex)
+            }
+        }, status=400)
+    except OutOfStockException as ex:
+        return web.json_response({
+            'error': {
+                'type': 'out_of_stock',
+                'message': str(ex)
+            }
+        }, status=400)
+    except:
+        raise
+
+def make_app():
+
+    app = web.Application(middlewares=[error_middleware])
 
     app.add_routes([
         web.get('/', hello),
@@ -12,6 +37,8 @@ def setup_app(app):
     ])
 
     setup_swagger(app)
+
+    return app
 
 async def hello(request):
     '''
@@ -54,8 +81,6 @@ async def ping(request):
     return web.Response(text='pong')
 
 if __name__ == '__main__':
-    app = web.Application()
-
-    setup_app(app)
+    app = make_app()
 
     web.run_app(app)

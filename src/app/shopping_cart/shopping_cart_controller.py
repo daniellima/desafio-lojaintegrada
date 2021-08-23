@@ -1,4 +1,5 @@
 from aiohttp import web
+from src.app.shopping_cart.out_of_stock_exception import OutOfStockException
 from src.app.item.item_repository import ItemRepository
 from src.app.shopping_cart.shopping_cart_repository import ShoppingCartRepository
 
@@ -174,6 +175,10 @@ class ShoppingCartController:
         # TODO: validation negócios (o item já não está no carrinho. Tem estoque, etc....)
 
         new_item = await ItemRepository().get_by_id(data['id'])
+
+        quantity = data['quantity']
+        if new_item.stock < quantity:
+            raise OutOfStockException(f'Item with id "{new_item.id}" don\'t have {quantity} or more itens in stock')
 
         await ShoppingCartRepository().add_item(new_item, data['quantity'])
 

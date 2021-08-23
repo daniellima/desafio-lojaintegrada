@@ -1,7 +1,8 @@
+from src.app.item.item_not_found_exception import ItemNotFoundException
 from src.app.item.item import Item
 
 items = [
-    Item(id='5', name='Playstation 5', price=3000)
+    Item(id='5', name='Playstation 5', price=3000, stock=5)
 ]
 
 class ItemRepository:
@@ -11,3 +12,5 @@ class ItemRepository:
         for item in items:
             if item.id == item_id:
                 return item
+        
+        raise ItemNotFoundException(f'Item with id "{item_id}" was not found')
