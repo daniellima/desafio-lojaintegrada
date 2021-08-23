@@ -52,7 +52,7 @@ Não funcionais:
 - [ ] Autenticação
 - [✔️] Global error handling
 - [✔️] Validação de API
-- [ ] Lidar com adição paralela de itens no carrinho
+- [✔️] Lidar com adição paralela de itens no carrinho
 - [ ] Schema de erro unificado e com descrição dos tipos de erros
 - [ ] Reorganizar testes em termos dos endpoints, já que os testes são de API
 - [ ] Adicionar endpoint da documentação da API aqui no README
