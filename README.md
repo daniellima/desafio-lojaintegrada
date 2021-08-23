@@ -48,8 +48,10 @@ Não funcionais:
 - [ ] Testes de stress com k6
 - [ ] Autenticação
 - [✔️] Global error handling
-- [ ] Validation de API
+- [✔️] Validação de API
 - [ ] Lidar com adição paralela de itens no carrinho
+- [ ] Schema de erro unificado e com descrição dos tipos de erros
+- [ ] Reorganizar testes em termos dos endpoints, já que os testes são de API
 
 ## Contribuindo
 

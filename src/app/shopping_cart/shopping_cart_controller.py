@@ -3,6 +3,7 @@ from src.app.shopping_cart.item_already_exists_on_shopping_cart import ItemAlrea
 from src.app.shopping_cart.out_of_stock_exception import OutOfStockException
 from src.app.item.item_repository import ItemRepository
 from src.app.shopping_cart.shopping_cart_repository import ShoppingCartRepository
+from schema import Schema, And
 
 class ShoppingCartController:
 
@@ -119,7 +120,7 @@ class ShoppingCartController:
                 example: 4
               quantity:
                 type: int
-                description: A quantidade de itens a serem adicionados
+                description: A quantidade de itens a serem adicionados. Precisa ser maior que 0
                 example: 2
             required:
               - id
@@ -169,11 +170,12 @@ class ShoppingCartController:
                     - error
         '''
 
-        # TODO: validation HTTP 
-
         data = await request.json()
 
-        # TODO: validation negócios (o item já não está no carrinho. Tem estoque, etc....)
+        Schema({
+            'id': str,
+            'quantity': And(int, lambda n: n > 0, error='Key \'quantity\' must be greater than 0')
+        }).validate(data)
 
         new_item = await ItemRepository().get_by_id(data['id'])
 

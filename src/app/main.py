@@ -1,5 +1,6 @@
 from aiohttp import web
 from aiohttp_swagger import setup_swagger
+from schema import SchemaError
 from src.app.shopping_cart.item_already_exists_on_shopping_cart import ItemAlreadyExistsOnShoppingCart
 from src.app.shopping_cart.out_of_stock_exception import OutOfStockException
 from src.app.item.item_not_found_exception import ItemNotFoundException
@@ -28,6 +29,13 @@ async def error_middleware(request, handler):
             'error': {
                 'type': 'item_already_exists_on_shopping_cart',
                 'message': str(ex)
+            }
+        }, status=400)
+    except SchemaError as ex:
+        return web.json_response({
+            'error': {
+                'type': 'failed_validating_json',
+                'message': str(ex.code)
             }
         }, status=400)
     except:

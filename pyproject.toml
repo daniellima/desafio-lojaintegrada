@@ -10,6 +10,9 @@ aiohttp = "^3"
 chardet = "^4"
 aiodns = "^3"
 aiohttp-swagger = "^1"
+schema = "^0"
+aiomysql = "^0"
+yoyo-migrations = "^7"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6"

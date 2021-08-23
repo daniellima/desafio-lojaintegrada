@@ -105,3 +105,31 @@ async def test_add_item_twice_to_shopping_cart_should_result_in_error(client):
         }
     }
 
+async def test_add_item_to_shopping_cart_with_empty_body_should_result_in_error(client):
+
+    resp = await client.post('/v1/shopping_cart/items', json={})
+
+    assert resp.status == 400
+
+    assert (await resp.json()) == {
+        'error': {
+            'type': 'failed_validating_json',
+            'message': 'Missing keys: \'id\', \'quantity\''
+        }
+    }
+
+async def test_add_item_to_shopping_cart_with_no_quantity_should_result_in_error(client):
+
+    resp = await client.post('/v1/shopping_cart/items', json={
+        'id': '10',
+        'quantity': 0
+    })
+
+    assert resp.status == 400
+
+    assert (await resp.json()) == {
+        'error': {
+            'type': 'failed_validating_json',
+            'message': 'Key \'quantity\' must be greater than 0'
+        }
+    }
