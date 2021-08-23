@@ -26,3 +26,6 @@ class ShoppingCartRepository(DatabaseRepository):
 
     async def add_item(self, shopping_cart_id, new_item, quantity):
         await self.update('INSERT INTO shopping_cart_item VALUES (%s, %s, %s, %s, %s)', (new_item.id, shopping_cart_id, new_item.name, new_item.price, quantity))
+
+    async def remove_item(self, shopping_cart_id, item_id):
+        await self.update('DELETE FROM shopping_cart_item WHERE shopping_cart_id=%s AND id=%s', (shopping_cart_id, item_id))

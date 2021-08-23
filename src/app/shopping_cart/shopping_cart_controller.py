@@ -198,3 +198,33 @@ class ShoppingCartController:
             'name': new_item.name,
             'price': new_item.price,
         }, status=201)
+
+    async def delete_item(request):
+            '''
+            ---
+            description: Remove um item do carrinho do usuário. Se o item não existir, nenhum erro será gerado.
+            tags:
+            - shopping_cart
+            produces:
+            - application/json
+            parameters:
+            - in: path
+              name: id
+              required: true
+              type: string
+              description: O id do item a ser removido
+            responses:
+                "200":
+                    description: Item removido ou já não existente
+            '''
+
+            sc_repo = ShoppingCartRepository(request['conn'])
+
+            sc = await sc_repo.get()
+
+            item_id = request.match_info['id']
+
+            await sc_repo.remove_item(sc.id, item_id)
+
+            return web.json_response({}, status=200)
+

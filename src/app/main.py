@@ -7,6 +7,20 @@ from src.app.shopping_cart.item_already_exists_on_shopping_cart import ItemAlrea
 from src.app.shopping_cart.out_of_stock_exception import OutOfStockException
 from src.app.item.item_not_found_exception import ItemNotFoundException
 from src.app.shopping_cart.shopping_cart_controller import ShoppingCartController
+import logging
+import json
+
+logger = logging.getLogger(__name__)
+
+@web.middleware
+async def log_middleware(request, handler):
+    logger.debug(json.dumps({'message': 'Request received', 'raw':(await request.text())}, indent=2))
+
+    resp = await handler(request)
+
+    logger.debug(json.dumps({'message': 'Response sent', 'raw':(resp.text)}, indent=2))
+
+    return resp
 
 @web.middleware
 async def db_middleware(request, handler):
@@ -54,13 +68,14 @@ async def error_middleware(request, handler):
 
 def make_app():
 
-    app = web.Application(middlewares=[error_middleware, db_middleware])
+    app = web.Application(middlewares=[log_middleware, error_middleware, db_middleware])
 
     app.add_routes([
         web.get('/', hello),
         web.get('/ping', ping),
         web.get('/v1/shopping_cart', ShoppingCartController.get),
-        web.post('/v1/shopping_cart/items', ShoppingCartController.post_item)
+        web.post('/v1/shopping_cart/items', ShoppingCartController.post_item),
+        web.delete('/v1/shopping_cart/items/{id}', ShoppingCartController.delete_item)
     ])
 
     setup_swagger(app)
@@ -108,7 +123,6 @@ async def ping(request):
     return web.Response(text='pong')
 
 if __name__ == '__main__':
-    import logging
     logging.basicConfig(level=logging.DEBUG, format='%(levelname)s %(asctime)s - %(name)s: %(message)s')
 
     app = make_app()

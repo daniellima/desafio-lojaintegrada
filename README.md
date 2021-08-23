@@ -30,7 +30,7 @@ Funcionais:
 - [✔️] Adicionar um item no carrinho
     - usando ID do produto
     - Erro se estoque 0 ou produto não existe ou item já no carrinho
-- [ ] Remover um item do carrinho
+- [✔️] Remover um item do carrinho
     - pelo ID do produto
 - [ ] Atualizar a quantidade de um item no carrinho
     - ID do produto + quantidade
