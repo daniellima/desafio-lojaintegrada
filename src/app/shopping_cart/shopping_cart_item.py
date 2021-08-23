@@ -1,9 +1,9 @@
 class ShoppingCartItem:
 
-    def __init__(self, item, quantity):
-        self.id = item.id
-        self.name = item.name
-        self.price = item.price
+    def __init__(self, id, name, price, quantity):
+        self.id = id
+        self.name = name
+        self.price = price
         self.quantity = quantity
 
     @property

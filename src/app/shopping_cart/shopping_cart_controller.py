@@ -85,7 +85,7 @@ class ShoppingCartController:
                     - total
         '''
 
-        sc = await ShoppingCartRepository().get()
+        sc = await ShoppingCartRepository(request['conn']).get()
 
         return web.json_response({
             'items': [{
@@ -183,13 +183,15 @@ class ShoppingCartController:
         if new_item.stock < quantity:
             raise OutOfStockException(f'Item with id "{new_item.id}" don\'t have {quantity} or more itens in stock')
 
-        sc = await ShoppingCartRepository().get()
+        sc_repo = ShoppingCartRepository(request['conn'])
+
+        sc = await sc_repo.get()
 
         already_exists = (new_item.id in [item.id for item in sc.items])
         if already_exists:
             raise ItemAlreadyExistsOnShoppingCart(f'Item with id "{new_item.id}" is already on this shopping cart')
 
-        await ShoppingCartRepository().add_item(new_item, data['quantity'])
+        await sc_repo.add_item(sc.id, new_item, data['quantity'])
 
         return web.json_response({
             'id': new_item.id,

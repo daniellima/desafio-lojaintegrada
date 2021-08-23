@@ -1,10 +1,21 @@
 from aiohttp import web
 from aiohttp_swagger import setup_swagger
+from src.app.database_repository import DatabaseRepository
 from schema import SchemaError
+import aiomysql
 from src.app.shopping_cart.item_already_exists_on_shopping_cart import ItemAlreadyExistsOnShoppingCart
 from src.app.shopping_cart.out_of_stock_exception import OutOfStockException
 from src.app.item.item_not_found_exception import ItemNotFoundException
 from src.app.shopping_cart.shopping_cart_controller import ShoppingCartController
+
+@web.middleware
+async def db_middleware(request, handler):
+    async with aiomysql.connect(host='db', port=3306,
+                                user='root', password='defaultpass', db='shopping_cart') as conn:
+
+        request['conn'] = conn
+
+        return await handler(request)
 
 @web.middleware
 async def error_middleware(request, handler):
@@ -43,7 +54,7 @@ async def error_middleware(request, handler):
 
 def make_app():
 
-    app = web.Application(middlewares=[error_middleware])
+    app = web.Application(middlewares=[error_middleware, db_middleware])
 
     app.add_routes([
         web.get('/', hello),
@@ -97,6 +108,9 @@ async def ping(request):
     return web.Response(text='pong')
 
 if __name__ == '__main__':
+    import logging
+    logging.basicConfig(level=logging.DEBUG, format='%(levelname)s %(asctime)s - %(name)s: %(message)s')
+
     app = make_app()
 
     web.run_app(app)

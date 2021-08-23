@@ -7,3 +7,13 @@ services:
       - .:/usr/src/app
     ports:
       - "8080:8080"
+    depends_on: 
+      - db
+
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: defaultpass
+      MYSQL_DATABASE: shopping_cart
+    ports:
+      - "3306:3306"

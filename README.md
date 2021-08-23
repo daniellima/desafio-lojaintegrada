@@ -13,6 +13,9 @@ Só é necessário ter Docker e Docker-Compose instalados para fazer o projeto f
 # Para iniciar a API execute:
 docker-compose up --build -d
 
+# Para criar o banco de dados:
+docker-compose run --rm web poetry run yoyo apply
+
 # A API deve estar ouvindo a porta 8080. Para testar:
 curl localhost:8080
 ```
@@ -52,6 +55,8 @@ Não funcionais:
 - [ ] Lidar com adição paralela de itens no carrinho
 - [ ] Schema de erro unificado e com descrição dos tipos de erros
 - [ ] Reorganizar testes em termos dos endpoints, já que os testes são de API
+- [ ] Adicionar endpoint da documentação da API aqui no README
+- [ ] Logs
 
 ## Contribuindo
 
@@ -65,6 +70,7 @@ Em termos de stack:
 - Poetry para gerenciar dependências
 - pytest para testes
 - aiohttp como framework web
+- yoyo para gerenciar migrations
 
 ### Rodando testes
 
@@ -80,6 +86,16 @@ docker-compose run web poetry update
 # Lembre que o update só vai atualizar o lock file em um container efêmero. 
 # Para efetivamente instalar na imagem da aplicação, refaça o build:
 docker-compose build # ou docker-compose up --build -d
+```
+
+### Criando migrations
+
+```bash
+# Para gerenciar migrações, basta usar os commandos do yoyo:
+docker-compose run --rm web poetry run yoyo (comando aqui)
+
+# Lembre que ao criar uma migração ela vai ser criada de dentro do container, como root. Então é preciso dar permissões para seu usuário:
+sudo chown -R $(id -u):$(id -g) src/migrations/s*
 ```
 
 ## Autores
