@@ -32,9 +32,9 @@ Funcionais:
     - Erro se estoque 0 ou produto não existe ou item já no carrinho
 - [✔️] Remover um item do carrinho
     - pelo ID do produto
-- [ ] Atualizar a quantidade de um item no carrinho
+- [✔️] Atualizar a quantidade de um item no carrinho
     - ID do produto + quantidade
-    - Retornar erro com estoque atual do item, se não tem item suficiente
+    - Retornar erro se não tem item suficiente
 - [ ] Adicionar um cupom de desconto ao carrinho
     - pelo ID do cupom
     - cupom fixo. Preço não pode ser menor que zero 

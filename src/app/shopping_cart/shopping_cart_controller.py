@@ -249,3 +249,76 @@ class ShoppingCartController:
 
             return web.json_response({}, status=200)
 
+    async def update_item_quantity(request):
+        '''
+        ---
+        description: Atualiza a quantidade de um determinado item no carrinho
+        tags:
+        - shopping_cart
+        produces:
+        - application/json
+        parameters:
+        parameters:
+        - in: path
+          name: id
+          required: true
+          type: string
+          description: O id do item cuja quantidade será atualizada
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              quantity:
+                type: int
+                description: A nova quantidade de itens. Precisa ser maior que 0
+                example: 2
+            required:
+              - quantity
+        responses:
+            "201":
+                description: Quantidade do item atualizada
+            "400":
+                description: A quantidade desse item não pode ser atualizada. Mais detalhes no erro específico lançado
+                schema:
+                    type: object
+                    properties:
+                        error:
+                            type: object
+                            properties:
+                                type:
+                                    type: string
+                                    description: o tipo do erro
+                                    example: no_stock
+                                message:
+                                    type: string
+                                    description: uma descrição legível por humanos para o erro
+                                    example: Not enough items in stock
+                            required:
+                            - type
+                            - message
+                    required:
+                    - error
+        '''
+
+        data = await request.json()
+
+        Schema({
+            'quantity': And(int, lambda n: n > 0, error='Key \'quantity\' must be greater than 0')
+        }).validate(data)
+
+        item_id = request.match_info['id']
+        new_quantity = data['quantity']
+
+        item = await ItemRepository().get_by_id(item_id)
+
+        if item.stock < new_quantity:
+            raise OutOfStockException(f'Item with id "{item.id}" don\'t have {new_quantity} or more itens in stock')
+
+        sc_repo = ShoppingCartRepository(request['conn'])
+
+        sc = await sc_repo.get()
+
+        await sc_repo.update_item_quantity(sc.id, item.id, new_quantity)
+
+        return web.json_response({}, status=200)
