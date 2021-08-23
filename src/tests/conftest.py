@@ -19,6 +19,7 @@ async def empty_shopping_cart():
                                 user='root', password='defaultpass', db='shopping_cart') as conn:
         async with conn.cursor() as cur:
             await cur.execute("DELETE FROM shopping_cart_item")
+            await cur.execute("DELETE FROM shopping_cart_coupon")
             await cur.execute("DELETE FROM shopping_cart")
         
         await conn.commit()

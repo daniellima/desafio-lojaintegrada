@@ -1,0 +1,2 @@
+class CouponAlreadyExistsOnShoppingCart(Exception):
+    pass

@@ -34,8 +34,8 @@ Funcionais:
     - pelo ID do produto
 - [✔️] Atualizar a quantidade de um item no carrinho
     - ID do produto + quantidade
-    - Retornar erro se não tem item suficiente
-- [ ] Adicionar um cupom de desconto ao carrinho
+    - Retornar erro se [✔️] não tem item suficiente, [✔️] se o item não existe ou se [ ] o item não existe no carrinho
+- [✔️] Adicionar um cupom de desconto ao carrinho
     - pelo ID do cupom
     - cupom fixo. Preço não pode ser menor que zero 
 - [✔️] Limpar o carrinho 
@@ -47,16 +47,17 @@ Funcionais:
 
 Não funcionais:
 - [ ] Usar wiremock para simular API de produtos e cupons
-- [ ] Persistir carrinho em um banco de dados
+- [✔️] Persistir carrinho em um banco de dados
 - [ ] Testes de stress com k6
-- [ ] Autenticação
+- [ ] Gerenciar multiplos carrinhos
 - [✔️] Global error handling
 - [✔️] Validação de API
 - [✔️] Lidar com adição paralela de itens no carrinho
 - [ ] Schema de erro unificado e com descrição dos tipos de erros
 - [ ] Reorganizar testes em termos dos endpoints, já que os testes são de API
 - [ ] Adicionar endpoint da documentação da API aqui no README
-- [ ] Logs
+- [✔️] Logs
+- [ ] padronizar metodo de escrita de log estruturado
 
 ## Contribuindo
 

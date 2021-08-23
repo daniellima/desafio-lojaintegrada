@@ -1,9 +1,11 @@
 from aiohttp import web
 from aiohttp_swagger import setup_swagger
+from src.app.coupon.coupon_not_found_exception import CouponNotFoundException
 from src.app.database_repository import DatabaseRepository
 from schema import SchemaError
 import aiomysql
 from src.app.shopping_cart.item_already_exists_on_shopping_cart import ItemAlreadyExistsOnShoppingCart
+from src.app.shopping_cart.coupon_already_exists_on_shopping_cart import CouponAlreadyExistsOnShoppingCart
 from src.app.shopping_cart.out_of_stock_exception import OutOfStockException
 from src.app.item.item_not_found_exception import ItemNotFoundException
 from src.app.shopping_cart.shopping_cart_controller import ShoppingCartController
@@ -47,6 +49,13 @@ async def error_middleware(request, handler):
                 'message': str(ex)
             }
         }, status=400)
+    except CouponNotFoundException as ex:
+        return web.json_response({
+            'error': {
+                'type': 'coupon_not_found',
+                'message': str(ex)
+            }
+        }, status=400)
     except OutOfStockException as ex:
         return web.json_response({
             'error': {
@@ -58,6 +67,13 @@ async def error_middleware(request, handler):
         return web.json_response({
             'error': {
                 'type': 'item_already_exists_on_shopping_cart',
+                'message': str(ex)
+            }
+        }, status=400)
+    except CouponAlreadyExistsOnShoppingCart as ex:
+        return web.json_response({
+            'error': {
+                'type': 'coupon_already_exists_on_shopping_cart',
                 'message': str(ex)
             }
         }, status=400)
@@ -82,7 +98,9 @@ def make_app():
         web.delete('/v1/shopping_cart', ShoppingCartController.delete),
         web.post('/v1/shopping_cart/items', ShoppingCartController.post_item),
         web.delete(r'/v1/shopping_cart/items/{id:\d+}', ShoppingCartController.delete_item),
-        web.put(r'/v1/shopping_cart/items/{id:\d+}', ShoppingCartController.update_item_quantity)
+        web.put(r'/v1/shopping_cart/items/{id:\d+}', ShoppingCartController.update_item_quantity),
+        web.post('/v1/shopping_cart/coupons', ShoppingCartController.post_coupon),
+        web.delete(r'/v1/shopping_cart/coupons/{id:\d+}', ShoppingCartController.delete_coupon),
     ])
 
     setup_swagger(app)
