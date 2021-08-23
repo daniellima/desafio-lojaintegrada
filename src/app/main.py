@@ -80,7 +80,7 @@ def make_app():
         web.get('/ping', ping),
         web.get('/v1/shopping_cart', ShoppingCartController.get),
         web.post('/v1/shopping_cart/items', ShoppingCartController.post_item),
-        web.delete('/v1/shopping_cart/items/{id}', ShoppingCartController.delete_item)
+        web.delete(r'/v1/shopping_cart/items/{id:\d+}', ShoppingCartController.delete_item)
     ])
 
     setup_swagger(app)
