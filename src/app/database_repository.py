@@ -24,3 +24,8 @@ class DatabaseRepository:
         async with self.conn.cursor(aiomysql.DictCursor) as cur:
             await cur.execute(sql_query, params)
         await self.conn.commit()
+
+    async def execute(self, cursor, sql_query, params=()):
+        logger.debug(json.dumps({'message': 'Executing query', 'query':sql_query, 'params': str(params)}, indent=2))
+        await cursor.execute(sql_query, params)
+        

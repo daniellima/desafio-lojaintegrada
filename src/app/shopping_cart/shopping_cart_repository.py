@@ -1,8 +1,12 @@
+import json
 from src.app.shopping_cart.shopping_cart_coupon import ShoppingCartCoupon
 from src.app.database_repository import DatabaseRepository
 from src.app.shopping_cart.item_already_exists_on_shopping_cart import ItemAlreadyExistsOnShoppingCart
 from src.app.shopping_cart.shopping_cart_item import ShoppingCartItem
 from src.app.shopping_cart.shopping_cart import ShoppingCart
+import logging
+
+logger = logging.getLogger(__name__)
 
 class ShoppingCartRepository(DatabaseRepository):
 
@@ -32,8 +36,18 @@ class ShoppingCartRepository(DatabaseRepository):
         return sc
 
     async def clear(self, shopping_cart_id):
-        await self.update('DELETE FROM shopping_cart_item WHERE shopping_cart_id=%s', (shopping_cart_id,))
-        await self.update('DELETE FROM shopping_cart_coupon WHERE shopping_cart_id=%s', (shopping_cart_id,))
+        conn = self.conn
+
+        try:
+            async with conn.cursor() as cur:
+                await self.execute(cur, 'DELETE FROM shopping_cart_item WHERE shopping_cart_id=%s', (shopping_cart_id,))
+                await self.execute(cur, 'DELETE FROM shopping_cart_coupon WHERE shopping_cart_id=%s', (shopping_cart_id,))
+                
+            await conn.commit()
+        except Exception as ex:
+            logger.error(json.dumps({'message': 'Rollback when executing queries to clear the shopping cart', 'error':str(ex.__class__), 'error_message': str(ex)}, indent=2))
+            await conn.rollback()
+            raise
 
     async def add_item(self, shopping_cart_id, new_item, quantity):
         await self.update('INSERT INTO shopping_cart_item VALUES (%s, %s, %s, %s, %s)', (new_item.id, shopping_cart_id, new_item.name, new_item.price, quantity))
