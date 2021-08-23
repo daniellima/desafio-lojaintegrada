@@ -1,4 +1,5 @@
 from aiohttp import web
+from src.app.item.item_not_found_exception import ItemNotFoundException
 from src.app.shopping_cart.item_already_exists_on_shopping_cart import ItemAlreadyExistsOnShoppingCart
 from src.app.shopping_cart.coupon_already_exists_on_shopping_cart import CouponAlreadyExistsOnShoppingCart
 from src.app.shopping_cart.out_of_stock_exception import OutOfStockException
@@ -324,6 +325,14 @@ class ShoppingCartController:
         sc_repo = ShoppingCartRepository(request['conn'])
 
         sc = await sc_repo.get()
+
+        item_in_sc = False
+        for sc_item in sc.items:
+            if sc_item.id == item.id:
+                item_in_sc = True
+                break
+        if not item_in_sc:
+            raise ItemNotFoundException(f'Item with id "{item.id}" was not found')
 
         await sc_repo.update_item_quantity(sc.id, item.id, new_quantity)
 

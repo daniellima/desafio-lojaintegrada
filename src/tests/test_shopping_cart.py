@@ -325,6 +325,34 @@ async def test_update_quantity_of_unknow_item_should_result_in_error(client):
         }
     }
 
+async def test_update_quantity_of_existing_item_not_in_shopping_cart_should_result_in_error(client):
+
+    resp = await client.post('/v1/shopping_cart/items', json={
+        'id': '5',
+        'quantity': 1
+    })
+
+    assert resp.status == 201
+
+    assert (await resp.json()) == {
+        'id': '5',
+        'name': 'Playstation 5',
+        'price': 3000
+    }
+
+    resp = await client.put('/v1/shopping_cart/items/6', json={
+        'quantity': 1
+    })
+
+    assert resp.status == 400
+
+    assert (await resp.json()) == {
+        'error': {
+            'type': 'item_not_found',
+            'message': 'Item with id "6" was not found'
+        }
+    }
+
 async def test_update_quantity_of_item_with_quantity_greater_than_stock_should_result_in_error(client):
 
     resp = await client.post('/v1/shopping_cart/items', json={
