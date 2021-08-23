@@ -14,7 +14,11 @@ Só é necessário ter Docker e Docker-Compose instalados para fazer o projeto f
 docker-compose up --build -d
 
 # Para criar o banco de dados:
+# !!! Ao subir o container do mysql, é possível que ele demora alguns vários segundos para começar a funcionar
+# !!! Recomendo esperar algo em torno de 1 minuto
+# !!! Só depois desse tempo vai ser possível criar o banco
 docker-compose run --rm web poetry run yoyo apply
+
 
 # A API deve estar ouvindo a porta 8080. Para testar:
 curl localhost:8080
