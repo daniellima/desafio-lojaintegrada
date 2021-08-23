@@ -20,13 +20,13 @@ curl localhost:8080
 ## Roadmap
 
 Funcionais:
-- [ ] Criar carrinho para usuário
+- [✔️] Criar carrinho para usuário
     - o carrinho começa vazio.
-- [ ] Recuperar o carrinho
-    - retornar todas as infos do carrinho (cupom + produtos)
-- [ ] Adicionar um item no carrinho
+- [✔️] Recuperar o carrinho
+    - retornar todas as infos do carrinho ([ ] cupom + [✔️] produtos)
+- [✔️] Adicionar um item no carrinho
     - usando ID do produto
-    - Erro se estoque 0 ou produto não existe
+    - Erro se estoque 0 ou produto não existe ou item já no carrinho
 - [ ] Remover um item do carrinho
     - pelo ID do produto
 - [ ] Atualizar a quantidade de um item no carrinho
@@ -37,8 +37,8 @@ Funcionais:
     - cupom fixo. Preço não pode ser menor que zero 
 - [ ] Limpar o carrinho 
     - remover itens e cupons de desconto
-- [ ] Gerar totais e subtotais
-    - subtotal é soma dos preços dos produtos
+- [✔️] Gerar totais e subtotais
+    - [✔️] subtotal é soma dos preços dos produtos
     - total considera cupom de desconto
 
 
@@ -47,7 +47,7 @@ Não funcionais:
 - [ ] Persistir carrinho em um banco de dados
 - [ ] Testes de stress com k6
 - [ ] Autenticação
-- [ ] Global error handling
+- [✔️] Global error handling
 - [ ] Validation de API
 - [ ] Lidar com adição paralela de itens no carrinho
 
