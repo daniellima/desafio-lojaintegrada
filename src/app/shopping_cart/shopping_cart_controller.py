@@ -30,7 +30,7 @@ class ShoppingCartController:
                                     id:
                                         type: string
                                         description: O id do item
-                                        example: 3
+                                        example: '3'
                                     name:
                                         type: string
                                         description: O nome que identifica o produto para o usuário
@@ -57,7 +57,7 @@ class ShoppingCartController:
                                     id:
                                         type: string
                                         description: O id do cupom
-                                        example: 3
+                                        example: '3'
                                     name:
                                         type: string
                                         description: O nome que identifica o cupom para o usuário
@@ -117,7 +117,7 @@ class ShoppingCartController:
               id:
                 type: string
                 description: O id do item a ser adicionado
-                example: 4
+                example: '4'
               quantity:
                 type: int
                 description: A quantidade de itens a serem adicionados. Precisa ser maior que 0
@@ -134,7 +134,7 @@ class ShoppingCartController:
                         id:
                             type: string
                             description: O id do item
-                            example: 3
+                            example: '3'
                         name:
                             type: string
                             description: O nome que identifica o produto para o usuário
