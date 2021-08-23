@@ -18,7 +18,12 @@ async def log_middleware(request, handler):
 
     resp = await handler(request)
 
-    logger.debug(json.dumps({'message': 'Response sent', 'raw':(resp.text)}, indent=2))
+    if isinstance(resp, web.FileResponse):
+        raw_resp = '<file response>'
+    else:
+        raw_resp = resp.text
+
+    logger.debug(json.dumps({'message': 'Response sent', 'raw':raw_resp}, indent=2))
 
     return resp
 
