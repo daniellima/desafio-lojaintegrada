@@ -1,4 +1,5 @@
 from aiohttp import web
+from src.app.shopping_cart.item_already_exists_on_shopping_cart import ItemAlreadyExistsOnShoppingCart
 from src.app.shopping_cart.out_of_stock_exception import OutOfStockException
 from src.app.item.item_repository import ItemRepository
 from src.app.shopping_cart.shopping_cart_repository import ShoppingCartRepository
@@ -179,6 +180,12 @@ class ShoppingCartController:
         quantity = data['quantity']
         if new_item.stock < quantity:
             raise OutOfStockException(f'Item with id "{new_item.id}" don\'t have {quantity} or more itens in stock')
+
+        sc = await ShoppingCartRepository().get()
+
+        already_exists = (new_item.id in [item.id for item in sc.items])
+        if already_exists:
+            raise ItemAlreadyExistsOnShoppingCart(f'Item with id "{new_item.id}" is already on this shopping cart')
 
         await ShoppingCartRepository().add_item(new_item, data['quantity'])
 

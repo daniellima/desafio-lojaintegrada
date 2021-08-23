@@ -1,0 +1,2 @@
+class ItemAlreadyExistsOnShoppingCart(Exception):
+    pass

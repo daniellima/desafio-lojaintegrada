@@ -75,3 +75,33 @@ async def test_add_item_to_shopping_cart_with_quantity_greater_than_stock_should
             'message': 'Item with id "5" don\'t have 1000 or more itens in stock'
         }
     }
+
+async def test_add_item_twice_to_shopping_cart_should_result_in_error(client):
+
+    resp = await client.post('/v1/shopping_cart/items', json={
+        'id': '5',
+        'quantity': 1
+    })
+
+    assert resp.status == 201
+
+    assert (await resp.json()) == {
+        'id': '5',
+        'name': 'Playstation 5',
+        'price': 3000
+    }
+
+    resp = await client.post('/v1/shopping_cart/items', json={
+        'id': '5',
+        'quantity': 1
+    })
+
+    assert resp.status == 400
+
+    assert (await resp.json()) == {
+        'error': {
+            'type': 'item_already_exists_on_shopping_cart',
+            'message': 'Item with id "5" is already on this shopping cart'
+        }
+    }
+

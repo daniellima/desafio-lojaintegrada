@@ -1,5 +1,6 @@
 from aiohttp import web
 from aiohttp_swagger import setup_swagger
+from src.app.shopping_cart.item_already_exists_on_shopping_cart import ItemAlreadyExistsOnShoppingCart
 from src.app.shopping_cart.out_of_stock_exception import OutOfStockException
 from src.app.item.item_not_found_exception import ItemNotFoundException
 from src.app.shopping_cart.shopping_cart_controller import ShoppingCartController
@@ -19,6 +20,13 @@ async def error_middleware(request, handler):
         return web.json_response({
             'error': {
                 'type': 'out_of_stock',
+                'message': str(ex)
+            }
+        }, status=400)
+    except ItemAlreadyExistsOnShoppingCart as ex:
+        return web.json_response({
+            'error': {
+                'type': 'item_already_exists_on_shopping_cart',
                 'message': str(ex)
             }
         }, status=400)

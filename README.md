@@ -48,7 +48,8 @@ Não funcionais:
 - [ ] Testes de stress com k6
 - [ ] Autenticação
 - [ ] Global error handling
-- [ ] Validation
+- [ ] Validation de API
+- [ ] Lidar com adição paralela de itens no carrinho
 
 ## Contribuindo
 
