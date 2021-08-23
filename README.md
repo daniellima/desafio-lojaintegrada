@@ -26,7 +26,7 @@ Funcionais:
 - [✔️] Criar carrinho para usuário
     - o carrinho começa vazio.
 - [✔️] Recuperar o carrinho
-    - retornar todas as infos do carrinho ([ ] cupom + [✔️] produtos)
+    - retornar todas as infos do carrinho ([✔️] cupom + [✔️] produtos)
 - [✔️] Adicionar um item no carrinho
     - usando ID do produto
     - Erro se estoque 0 ou produto não existe ou item já no carrinho
@@ -39,7 +39,7 @@ Funcionais:
     - pelo ID do cupom
     - cupom fixo. Preço não pode ser menor que zero 
 - [✔️] Limpar o carrinho 
-    - remover [✔️] itens e [ ] cupons de desconto
+    - remover [✔️] itens e [✔️] cupons de desconto
 - [✔️] Gerar totais e subtotais
     - [✔️] subtotal é soma dos preços dos produtos
     - total considera cupom de desconto
