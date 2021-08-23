@@ -20,6 +20,10 @@ docker-compose run --rm web poetry run yoyo apply
 curl localhost:8080
 ```
 
+Para acessar a documentação, acesse:
+
+http://localhost:8080/api/doc#/ no seu navegador preferido
+
 ## Roadmap
 
 Funcionais:
@@ -34,7 +38,7 @@ Funcionais:
     - pelo ID do produto
 - [✔️] Atualizar a quantidade de um item no carrinho
     - ID do produto + quantidade
-    - Retornar erro se [✔️] não tem item suficiente, [✔️] se o item não existe ou se [ ] o item não existe no carrinho
+    - Retornar erro se [✔️] não tem item suficiente, [✔️] se o item não existe ou se [✔️] o item não existe no carrinho
 - [✔️] Adicionar um cupom de desconto ao carrinho
     - pelo ID do cupom
     - cupom fixo. Preço não pode ser menor que zero 
@@ -55,7 +59,7 @@ Não funcionais:
 - [✔️] Lidar com adição paralela de itens no carrinho
 - [ ] Schema de erro unificado e com descrição dos tipos de erros
 - [ ] Reorganizar testes em termos dos endpoints, já que os testes são de API
-- [ ] Adicionar endpoint da documentação da API aqui no README
+- [✔️] Adicionar endpoint da documentação da API aqui no README
 - [✔️] Logs
 - [ ] padronizar metodo de escrita de log estruturado
 
