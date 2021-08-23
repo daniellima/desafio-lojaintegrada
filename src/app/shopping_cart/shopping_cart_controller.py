@@ -228,3 +228,24 @@ class ShoppingCartController:
 
             return web.json_response({}, status=200)
 
+    async def delete(request):
+            '''
+            ---
+            description: Limpa o carrinho
+            tags:
+            - shopping_cart
+            produces:
+            - application/json
+            responses:
+                "200":
+                    description: O carrinho está limpo (todos os produtos e cupons foram removidos)
+            '''
+
+            sc_repo = ShoppingCartRepository(request['conn'])
+
+            sc = await sc_repo.get()
+
+            await sc_repo.clear(sc.id)
+
+            return web.json_response({}, status=200)
+

@@ -38,8 +38,8 @@ Funcionais:
 - [ ] Adicionar um cupom de desconto ao carrinho
     - pelo ID do cupom
     - cupom fixo. Preço não pode ser menor que zero 
-- [ ] Limpar o carrinho 
-    - remover itens e cupons de desconto
+- [✔️] Limpar o carrinho 
+    - remover [✔️] itens e [ ] cupons de desconto
 - [✔️] Gerar totais e subtotais
     - [✔️] subtotal é soma dos preços dos produtos
     - total considera cupom de desconto

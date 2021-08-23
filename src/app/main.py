@@ -79,6 +79,7 @@ def make_app():
         web.get('/', hello),
         web.get('/ping', ping),
         web.get('/v1/shopping_cart', ShoppingCartController.get),
+        web.delete('/v1/shopping_cart', ShoppingCartController.delete),
         web.post('/v1/shopping_cart/items', ShoppingCartController.post_item),
         web.delete(r'/v1/shopping_cart/items/{id:\d+}', ShoppingCartController.delete_item)
     ])
