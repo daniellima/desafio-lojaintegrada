@@ -11,7 +11,7 @@ class ShoppingCartCouponController:
         ---
         description: Adiciona um cupom de desconto no carrinho
         tags:
-        - shopping_cart
+        - shopping_cart_coupon
         produces:
         - application/json
         parameters:
@@ -101,7 +101,7 @@ class ShoppingCartCouponController:
             ---
             description: Remove um cupom do carrinho do usuário. Se o cupom não existir, nenhum erro será gerado.
             tags:
-            - shopping_cart
+            - shopping_cart_coupon
             produces:
             - application/json
             parameters:

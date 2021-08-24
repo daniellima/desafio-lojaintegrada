@@ -14,7 +14,7 @@ class ShoppingCartItemController:
         ---
         description: Retorna o carrinho atual do usuário
         tags:
-        - shopping_cart
+        - shopping_cart_item
         produces:
         - application/json
         parameters:
@@ -114,7 +114,7 @@ class ShoppingCartItemController:
             ---
             description: Remove um item do carrinho do usuário. Se o item não existir, nenhum erro será gerado.
             tags:
-            - shopping_cart
+            - shopping_cart_item
             produces:
             - application/json
             parameters:
@@ -143,7 +143,7 @@ class ShoppingCartItemController:
         ---
         description: Atualiza a quantidade de um determinado item no carrinho
         tags:
-        - shopping_cart
+        - shopping_cart_item
         produces:
         - application/json
         parameters:
