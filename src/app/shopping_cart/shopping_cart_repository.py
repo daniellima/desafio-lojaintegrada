@@ -10,11 +10,11 @@ logger = logging.getLogger(__name__)
 
 class ShoppingCartRepository(DatabaseRepository):
 
-    async def get(self):
-        db_cart = await self.query('SELECT id FROM shopping_cart WHERE id = %s', (1,))
+    async def get(self, shoping_cart_id):
+        db_cart = await self.query('SELECT id FROM shopping_cart WHERE id = %s', (shoping_cart_id,))
         if len(db_cart) == 0:
-            await self.update('INSERT INTO shopping_cart VALUES (%s)', (1,))
-            db_cart = ({'id': 1},)
+            await self.update('INSERT INTO shopping_cart VALUES (%s)', (shoping_cart_id,))
+            db_cart = ({'id': shoping_cart_id},)
 
         db_cart_id = db_cart[0]['id']
 

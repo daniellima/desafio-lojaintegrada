@@ -15,6 +15,22 @@ import json
 logger = logging.getLogger(__name__)
 
 @web.middleware
+async def auth_middleware(request, handler):
+
+    key = request.headers.get('X-API-Key', None)
+
+    if request.path.startswith('/v1/shopping_cart'):
+        if key is None:
+            return web.json_response({}, status=403)
+        else:
+            # Para simplficar. Como isso funciona na prática depende da estratégia de autenticação de microserviços usada (API Gateway, serviço externo, etc...)
+            request['user_id'] = key
+
+        logger.debug(json.dumps({'message': 'Authenticating with API Key', 'key':key}, indent=2))
+
+    return await handler(request)
+
+@web.middleware
 async def log_middleware(request, handler):
     logger.debug(json.dumps({'message': 'Request received', 'raw':(await request.text())}, indent=2))
 
@@ -89,7 +105,7 @@ async def error_middleware(request, handler):
 
 def make_app():
 
-    app = web.Application(middlewares=[log_middleware, error_middleware, db_middleware])
+    app = web.Application(middlewares=[log_middleware, auth_middleware, error_middleware, db_middleware])
 
     app.add_routes([
         web.get('/', hello),
@@ -103,7 +119,7 @@ def make_app():
         web.delete(r'/v1/shopping_cart/coupons/{id:\d+}', ShoppingCartController.delete_coupon),
     ])
 
-    setup_swagger(app)
+    setup_swagger(app, swagger_template_path='src/app/swagger_template.yaml')
 
     return app
 

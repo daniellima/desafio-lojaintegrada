@@ -88,7 +88,7 @@ class ShoppingCartController:
                     - total
         '''
 
-        sc = await ShoppingCartRepository(request['conn']).get()
+        sc = await ShoppingCartRepository(request['conn']).get(request['user_id'])
 
         return web.json_response({
             'items': [{
@@ -192,7 +192,7 @@ class ShoppingCartController:
 
         sc_repo = ShoppingCartRepository(request['conn'])
 
-        sc = await sc_repo.get()
+        sc = await sc_repo.get(request['user_id'])
 
         already_exists = (new_item.id in [item.id for item in sc.items])
         if already_exists:
@@ -227,7 +227,7 @@ class ShoppingCartController:
 
             sc_repo = ShoppingCartRepository(request['conn'])
 
-            sc = await sc_repo.get()
+            sc = await sc_repo.get(request['user_id'])
 
             item_id = request.match_info['id']
 
@@ -250,7 +250,7 @@ class ShoppingCartController:
 
             sc_repo = ShoppingCartRepository(request['conn'])
 
-            sc = await sc_repo.get()
+            sc = await sc_repo.get(request['user_id'])
 
             await sc_repo.clear(sc.id)
 
@@ -324,7 +324,7 @@ class ShoppingCartController:
 
         sc_repo = ShoppingCartRepository(request['conn'])
 
-        sc = await sc_repo.get()
+        sc = await sc_repo.get(request['user_id'])
 
         item_in_sc = False
         for sc_item in sc.items:
@@ -414,7 +414,7 @@ class ShoppingCartController:
 
         sc_repo = ShoppingCartRepository(request['conn'])
 
-        sc = await sc_repo.get()
+        sc = await sc_repo.get(request['user_id'])
 
         already_exists = (new_coupon.id in [coupon.id for coupon in sc.coupons])
         if already_exists:
@@ -449,7 +449,7 @@ class ShoppingCartController:
 
             sc_repo = ShoppingCartRepository(request['conn'])
 
-            sc = await sc_repo.get()
+            sc = await sc_repo.get(request['user_id'])
 
             coupon_id = request.match_info['id']
 

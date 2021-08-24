@@ -6,11 +6,24 @@ import pytest
 from src.app.main import make_app
 
 @pytest.fixture
-def client(loop, aiohttp_client):
+async def client(aiohttp_client):
     
     app = make_app()
 
-    return loop.run_until_complete(aiohttp_client(app))
+    client = await aiohttp_client(app, headers={
+        'X-API-Key': '1234567890'
+    })
+
+    return client
+
+@pytest.fixture
+async def unauthorized_client(aiohttp_client):
+    
+    app = make_app()
+
+    client = await aiohttp_client(app)
+
+    return client
 
 @pytest.fixture(autouse=True)
 async def empty_shopping_cart():

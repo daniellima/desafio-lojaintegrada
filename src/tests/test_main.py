@@ -1,11 +1,11 @@
-async def test_hello(client):
+async def test_hello(unauthorized_client):
 
-    resp = await client.get('/')
+    resp = await unauthorized_client.get('/')
     assert resp.status == 200
 
-async def test_ping(client):
+async def test_ping(unauthorized_client):
 
-    resp = await client.get('/ping')
+    resp = await unauthorized_client.get('/ping')
 
     assert resp.status == 200
 

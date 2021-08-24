@@ -52,12 +52,18 @@ Funcionais:
     - [✔️] subtotal é soma dos preços dos produtos
     - total considera cupom de desconto
 
+### Sobre Autenticação
+
+Eu estou exigindo um API Key e usando a própria chave como identificador do usuário para criar o carrinho.
+Isso implica que essa chave já foi considerada como válida por algum outro serviço, como um API Gateway.
+
+Como o método de autenticação não estava descrito nos detalhes do desafio, escolhi fazer o que parecia mais simples.
 
 Não funcionais:
 - [ ] Usar wiremock para simular API de produtos e cupons
 - [✔️] Persistir carrinho em um banco de dados
 - [ ] Testes de stress com k6
-- [ ] Gerenciar multiplos carrinhos
+- [✔️] Gerenciar multiplos carrinhos
 - [✔️] Global error handling
 - [✔️] Validação de API
 - [✔️] Lidar com adição paralela de itens no carrinho

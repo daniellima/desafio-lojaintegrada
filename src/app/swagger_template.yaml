@@ -1,0 +1,19 @@
+swagger: "2.0"
+info:
+  description: Uma API de carrinho simples
+  version: "0.1"
+  title: Shopping Cart API
+  contact:
+    name: daniellima.pessoal@gmail.com
+basePath: {{ base_path }}
+schemes:
+  - http
+  - https
+securityDefinitions:
+  apiKey:
+    type: apiKey
+    in: header
+    name: X-API-Key
+security:
+  - apiKey: []
+paths:
