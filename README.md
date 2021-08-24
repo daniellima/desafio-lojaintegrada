@@ -108,14 +108,15 @@ Em termos de stack:
 - yoyo para gerenciar migrations
 
 ### Rodando testes
-
-Os testes são majoritariamente de API. Isso é devido à baixa complexidade de regras de negócios da API interna, que permite testar ela bem só a nível de API, sem o perigo de o tempo de execução ficar extremamente alto.
-
 ```bash
 # A primeira coisa a fazer é rodar os testes e ver se está tudo certo:
 docker-compose run web poetry run python -m pytest 
+```
 
-# Se precisar atualizar alguma dependência do projeto:
+Os testes são majoritariamente de API. Isso é devido à baixa complexidade de regras de negócios da API interna, que permite testar ela bem só a nível de API, sem o perigo de o tempo de execução ficar extremamente alto.
+
+### Se precisar atualizar alguma dependência do projeto:
+```bash
 docker-compose run web poetry update
 
 # Lembre que o update só vai atualizar o lock file em um container efêmero. 
