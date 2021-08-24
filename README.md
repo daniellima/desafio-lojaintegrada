@@ -102,6 +102,9 @@ Em termos de stack:
 - Poetry para gerenciar dependências
 - pytest para testes
 - aiohttp como framework web
+- schema para validação
+- MySQL como banco de dados
+- Swagger (2.0) para documentação
 - yoyo para gerenciar migrations
 
 ### Rodando testes
