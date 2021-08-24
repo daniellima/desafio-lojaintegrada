@@ -86,7 +86,7 @@ Eu não consegui tempo para criar um mock que fizesse mais sentido. Minha idéia
 - [✔️] Validação de API
 - [✔️] Lidar com adição paralela de itens no carrinho
 - [ ] Schema de erro unificado e com descrição dos tipos de erros
-- [ ] Reorganizar testes em termos dos endpoints, já que os testes são de API
+- [✔️] Reorganizar testes em termos dos endpoints, já que os testes são de API
 - [✔️] Adicionar endpoint da documentação da API aqui no README
 - [✔️] Logs
 - [ ] padronizar metodo de escrita de log estruturado
