@@ -1,5 +1,6 @@
 from aiohttp import web
 import aiomysql
+import os
 from src.app.shared.json_log import log_debug
 from schema import SchemaError
 from src.app.shopping_cart.exceptions.coupon_already_exists_on_shopping_cart_exception import CouponAlreadyExistsOnShoppingCartException
@@ -8,7 +9,6 @@ from src.app.shopping_cart.exceptions.out_of_stock_exception import OutOfStockEx
 from src.app.item.item_not_found_exception import ItemNotFoundException
 from src.app.coupon.coupon_not_found_exception import CouponNotFoundException
 import logging
-import json
 
 
 logger = logging.getLogger(__name__)
@@ -46,8 +46,16 @@ async def log_middleware(request, handler):
 
 @web.middleware
 async def db_middleware(request, handler):
-    async with aiomysql.connect(host='db', port=3306,
-                                user='root', password='defaultpass', db='shopping_cart') as conn:
+    db = os.getenv('DB_NAME')
+    host = os.getenv('DB_HOST')
+    port = os.getenv('DB_PORT')
+    user = os.getenv('DB_USER')
+    password = os.getenv('DB_PASSWORD')
+
+    async with aiomysql.connect(host=host, port=int(port),
+                                user=user, 
+                                password=password, 
+                                db=db) as conn:
 
         request['conn'] = conn
 
