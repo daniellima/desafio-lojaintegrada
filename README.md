@@ -59,10 +59,28 @@ Isso implica que essa chave já foi considerada como válida por algum outro ser
 
 Como o método de autenticação não estava descrito nos detalhes do desafio, escolhi fazer o que parecia mais simples.
 
-Não funcionais:
-- [ ] Usar wiremock para simular API de produtos e cupons
+### Sobre o carrinho ser 1-1 com usuários
+
+Eu considerei apenas um carrinho por usuário. 
+A criação do carrinho é on demand. Ou seja, ele é criado quando ele é usado pela primeira vez.
+
+### Sobre cache de dados de cupom e items
+
+A API de Carrinho tenta ser o mais independente possível de outras APIs, para evitar gerar carga desnecessária nelas.
+Com isso, os dados de itens e cupons são salvos como uma forma de cache. As APIs externas são só consultadas quando
+itens ou cupons são adicionados, momento no qual os dados são pegos. No caso de itens, a API de Itens também é usada para verificar o estoque.
+
+A idéia é que qualquer mudança que foi feita nos itens ou cupons depois que o carrinho foi salvo vai ser considerada eventualmente
+no processo completo de compra.
+
+### Sobre API de Itens e Cupons
+
+O que consegui fazer foi um Repository em memória, simulando algo que poderia ser no futuro providenciado por uma API de verdade.
+Eu não consegui tempo para criar um mock que fizesse mais sentido. Minha idéia era usar um container de wiremock para simular essas APIs.
+
+## Todo
+
 - [✔️] Persistir carrinho em um banco de dados
-- [ ] Testes de stress com k6
 - [✔️] Gerenciar multiplos carrinhos
 - [✔️] Global error handling
 - [✔️] Validação de API
