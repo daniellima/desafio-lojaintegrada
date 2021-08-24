@@ -1,10 +1,9 @@
 import json
-from src.app.shopping_cart.shopping_cart_coupon import ShoppingCartCoupon
-from src.app.database_repository import DatabaseRepository
-from src.app.shopping_cart.item_already_exists_on_shopping_cart import ItemAlreadyExistsOnShoppingCart
-from src.app.shopping_cart.shopping_cart_item import ShoppingCartItem
-from src.app.shopping_cart.shopping_cart import ShoppingCart
 import logging
+from src.app.shopping_cart.models.shopping_cart import ShoppingCart
+from src.app.shopping_cart.models.shopping_cart_item import ShoppingCartItem
+from src.app.shopping_cart.models.shopping_cart_coupon import ShoppingCartCoupon
+from src.app.shared.database_repository import DatabaseRepository
 
 logger = logging.getLogger(__name__)
 

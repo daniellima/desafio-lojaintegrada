@@ -1,7 +1,5 @@
 from aiohttp import web
 import aiomysql
-from src.app.shopping_cart.shopping_cart import ShoppingCart
-from src.app.shopping_cart.shopping_cart_repository import ShoppingCartRepository
 import pytest
 from src.app.main import make_app
 
