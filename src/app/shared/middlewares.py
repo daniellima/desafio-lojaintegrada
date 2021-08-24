@@ -1,5 +1,6 @@
 from aiohttp import web
 import aiomysql
+from src.app.shared.json_log import log_debug
 from schema import SchemaError
 from src.app.shopping_cart.exceptions.coupon_already_exists_on_shopping_cart_exception import CouponAlreadyExistsOnShoppingCartException
 from src.app.shopping_cart.exceptions.item_already_exists_on_shopping_cart_exception import ItemAlreadyExistsOnShoppingCartException
@@ -24,13 +25,13 @@ async def auth_middleware(request, handler):
             # Para simplficar. Como isso funciona na prática depende da estratégia de autenticação de microserviços usada (API Gateway, serviço externo, etc...)
             request['user_id'] = key
 
-        logger.debug(json.dumps({'message': 'Authenticating with API Key', 'key':key}, indent=2))
+        log_debug(logger, {'message': 'Authenticating with API Key', 'key':key})
 
     return await handler(request)
 
 @web.middleware
 async def log_middleware(request, handler):
-    logger.debug(json.dumps({'message': 'Request received', 'raw':(await request.text())}, indent=2))
+    log_debug(logger, {'message': 'Request received', 'raw':(await request.text())})
 
     resp = await handler(request)
 
@@ -39,7 +40,7 @@ async def log_middleware(request, handler):
     else:
         raw_resp = resp.text
 
-    logger.debug(json.dumps({'message': 'Response sent', 'raw':raw_resp}, indent=2))
+    log_debug(logger, {'message': 'Response sent', 'raw':raw_resp})
 
     return resp
 

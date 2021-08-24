@@ -1,5 +1,6 @@
 import json
 import logging
+from src.app.shared.json_log import log_error
 from src.app.shopping_cart.models.shopping_cart import ShoppingCart
 from src.app.shopping_cart.models.shopping_cart_item import ShoppingCartItem
 from src.app.shopping_cart.models.shopping_cart_coupon import ShoppingCartCoupon
@@ -44,7 +45,7 @@ class ShoppingCartRepository(DatabaseRepository):
                 
             await conn.commit()
         except Exception as ex:
-            logger.error(json.dumps({'message': 'Rollback when executing queries to clear the shopping cart', 'error':str(ex.__class__), 'error_message': str(ex)}, indent=2))
+            log_error(logger, {'message': 'Rollback when executing queries to clear the shopping cart', 'error':str(ex.__class__), 'error_message': str(ex)})
             await conn.rollback()
             raise
 
